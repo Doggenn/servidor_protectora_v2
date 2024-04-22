@@ -5,10 +5,14 @@ module.exports.login = (req, res) => {
 
     const { username, password } = req.body;
 
-    const consulta = 'SELECT * FROM usuarios WHERE email = ? AND password = ?';
+    
     try {
 
-        connection.query(consulta, [username, password], (error, result) => {
+        if (username != "" && password != "") {
+
+            
+            const consulta = 'SELECT * FROM usuarios WHERE email = ? AND password = ?';
+            connection.query(consulta, [username, password], (error, result) => {
 
             if (error) {
                 res.send(error);
@@ -27,6 +31,16 @@ module.exports.login = (req, res) => {
                 res.send({ message: '¡El usuario ingresado no existe!' });
             }
         });
+
+
+        } else {
+            
+
+            res.send({ message: '¡No puedes dejar los campos vacios de Email o contraseña!' });
+
+        }
+
+       
 
 
     } catch (e) {
